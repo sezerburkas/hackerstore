@@ -1,0 +1,4 @@
+FROM  docker.io/bitnami/laravel:9
+
+RUN sudo apt-get update -y && sudo apt-get install nano -y && sudo apt-get install composer -y && sudo apt-get install php-pgsql -y && sudo apt-get install php-gd -y && sudo apt-get install php-mbstring -y
+
