@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
+use App\Models\User;
 
 class CreateUsersSeeder extends Seeder
 {
@@ -16,20 +18,20 @@ class CreateUsersSeeder extends Seeder
     {
         $users = [
             [
-            'name' => 'Morpheus',
             'username' => 'morpheus',
+            'email' => 'morpehus@nebuchadnezzarii.com',
             'type' => 1,
             'password' => Hash::make('redpillallday')
             ],
             [
-            'name' => 'Neo',
             'username' => 'thechoosenone',
+            'email' => 'neo@nebuchadnezzarii.com',
             'type' => 2,
             'password' => Hash::make('trinityrules32')
             ],
             [
-            'name' => 'Mouse',
             'username' => 'mouse',
+            'email' => 'mouse@nebuchadnezzarii.com',
             'type' => 0,
             'password' => Hash::make('womaninred')
             ],
