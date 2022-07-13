@@ -37,4 +37,38 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+
+    public function login(Request $request){
+
+        $data = $request->validate([
+            'username' => 'required|max:25',
+            'password' => 'required|max:25'
+        ]);
+
+        if(auth()->attempt($data)){
+
+            /**
+             * Redirecting users based on their roles
+             * 
+             * In this case I redirect users to same page
+             * because I'm lazy.
+             * 
+             */
+            switch(auth()->user()->type){
+                case 'user':
+                    return redirect()->route('myaccount');
+                break;
+                case 'admin':
+                    return redirect()->route('myaccount');
+                break;
+                case 'developer':
+                    return redirect()->route('myaccount');
+                break;
+            }
+
+        }else{
+            return back()->with('error', 'uname or passwd are wrong.');
+        }
+
+    }
 }
