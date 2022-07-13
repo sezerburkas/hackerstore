@@ -28,3 +28,7 @@ Route::get('/register', function(){
 Route::get('/cart', function(){
     return view('pages.cart');
 })->name('cart');
+
+Route::middleware(['auth', 'user-access:user'])->group( function (){
+    Route::get('/myAccount', [MainController::class, 'myAccount'])->name('myaccount');
+});
