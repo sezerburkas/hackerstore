@@ -5,31 +5,3 @@ $body-bg: #f8fafc;
 $font-family-sans-serif: 'Nunito', sans-serif;
 $font-size-base: 0.9rem;
 $line-height-base: 1.6;
-
-// Colors
-$dark-v1: #2B2A33;
-$dark-v2: #202224;
-$default-green: #149414;
-$green-v1: #0e6b0e;
-$green-v2: #149414;
-$light-green: #9ccc9c;
-$dark-green: #2b5329;
-$default-white: #dbdbdb;
-$red : #cc1100;
-$blood-red: #8b0000;
-
-// Shadows and Borders
-
-$text-shadow: 0 0 12px rgb(255,255,255, 0.1), 0px 0px 20px rgb(22, 100, 8);
-$regular-text-shadow: 0 0 2px rgb(255,255,255, 0.1), 0px 0px 6px rgb(22, 100, 8, 0.5);
-
-$card-shadow:0 0 10px -2px rgba(255, 255, 255, 0.5), 0 0 10px 2px green;
-$card-shadow-hover:0 0 10px 1px rgba(255, 255, 255, 0.5), 0 0 10px 4px green;
-
-$check-shadow:0 0 3px -2px rgba(255, 255, 255, 0.5), 0 0 3px 1px green;
-$check-shadow-hover:0 0 3px 1px rgba(255, 255, 255, 0.5), 0 0 3px 2px green;
-
-$nav-shadow:0 -15px 20px 4px rgb(255 255 255 / 50%), 0 -10px 20px 4px green;
-$footer-shadow:0 15px 20px 4px rgba(255, 255, 255, 0.5), 0 10px 20px 4px green;
-
-$border-radius: 6px;

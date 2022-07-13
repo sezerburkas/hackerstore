@@ -32,3 +32,6 @@ Route::get('/cart', function(){
 Route::middleware(['auth', 'user-access:user'])->group( function (){
     Route::get('/myAccount', [MainController::class, 'myAccount'])->name('myaccount');
 });
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
