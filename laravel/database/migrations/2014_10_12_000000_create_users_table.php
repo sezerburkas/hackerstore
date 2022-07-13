@@ -21,6 +21,8 @@ return new class extends Migration
             $table->string('password');
             $table->string('ip')->nullable();
             $table->rememberToken();
+            $table->tinyInteger('type')->default(0);
+            /** 0 = User | 1 = Admin | 2 = Developer */
             $table->timestamps();
         });
     }
