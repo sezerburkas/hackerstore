@@ -22,6 +22,7 @@ return new class extends Migration
             $table->integer('discount')->nullable();
             $table->integer('stock')->default(0);
             $table->string('img')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }
