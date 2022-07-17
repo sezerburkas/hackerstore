@@ -22,7 +22,7 @@ Route::get('/login', [MainController::class, 'login'])->name('login');
 
 Route::get('/register', [MainController::class, 'register'])->name('register');
 
-// Pages accessible with or without auth
+//Pages accessible with or without auth
 
 Route::get('/cart', [MainController::class, 'cart'])->name('cart');
 
@@ -40,9 +40,8 @@ Route::middleware(['auth', 'user-access:user'])->group( function (){
 /** Auth group
  * This is before I learned restfull API's 
  */
-Route::POST('/auth', [LoginController::class, 'login'])->name('auth');
-
-Route::POST('/create', [RegisterController::class, 'register'])->name('create');
+Route::POST('/login', [LoginController::class, 'login']);
+Route::POST('/register', [RegisterController::class, 'register']);
 
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 

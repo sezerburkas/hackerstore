@@ -38,7 +38,9 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest')->except('logout');
+        $this->middleware('guest')
+            ->except('logout')
+            ->except('logoutAPI');
     }
 
     public function login(Request $request){
@@ -49,6 +51,10 @@ class LoginController extends Controller
             'remember' => 'min:1',
         ]);
 
+        if(!isset($data['remember'])){
+            $data['remember'] = false;
+        }
+
         $credentials = [
             'username' => $data["username"],
             'password' => $data["password"]
@@ -57,6 +63,7 @@ class LoginController extends Controller
         if(Auth::attempt($credentials, $data["remember"])){
             
             $json['success'] = true;
+            $json['token'] = Auth::user()->createToken('hackerToken')->plainTextToken;
             $json['redirect'] = url()->route('index');
 
             /**
@@ -96,5 +103,15 @@ class LoginController extends Controller
         $request->session()->regenerateToken();
 
         return redirect()->route('login');
+    }
+
+    public function logoutAPI(Request $request){
+
+        
+        auth()->user()->tokens()->delete();
+
+        return [
+            'message' => 'logged out.'
+        ];
     }
 }

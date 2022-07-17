@@ -73,13 +73,16 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
         ];
 
-        User::create($user);
+        $newUser = User::create($user);
 
-        
-        if (Auth::attempt(['username'=>$data['username'],'password'=>$data['password']])) {
-            
-            return true;
-        }
+        $token = $newUser->createToken('hackerToken')->plainTextToken;
+
+        $response = [
+            'user' => $newUser,
+            'token' => $token
+        ];
+
+        return $response;
     }
 
     public function register(Request $request){
@@ -102,8 +105,10 @@ class RegisterController extends Controller
             $json['errors'] = 'Terms & Condition must be checked.';
             $json['status'] = false;
         }else{
-            if($this->create($validator->validated())){
+            if($response = $this->create($validator->validated())){
+                Auth::login($response['user']);
                 $json['redirect'] = url()->route('index'); 
+                $json['response'] = $response;
                 $json['status'] = true;
             }else{
                 $json['errors'] = 'Something went wrong.';

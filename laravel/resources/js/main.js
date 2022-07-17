@@ -7,7 +7,7 @@ $('form[name=login]').on('submit', function(e){
 
     $.ajax({
         type:'POST',
-        url:'/auth',
+        url:'/login',
         data:{
         _token : $('input[name=_token]').val(),
         username : $("#username").val(),
@@ -33,7 +33,7 @@ $('form[name=register]').on('submit', function(e){
     $('.alert').css({"padding":"0em 1em","max-height":"0"});
     $.ajax({
         type:'POST',
-        url:'/create',
+        url:'/register',
         data:{
         _token : $('input[name=_token]').val(),
         username : $("input[name=username]").val(),
