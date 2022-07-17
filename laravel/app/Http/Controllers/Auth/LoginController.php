@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -42,10 +45,19 @@ class LoginController extends Controller
 
         $data = $request->validate([
             'username' => 'required|max:25',
-            'password' => 'required|max:25'
+            'password' => 'required|max:25',
+            'remember' => 'min:1',
         ]);
 
-        if(auth()->attempt($data)){
+        $credentials = [
+            'username' => $data["username"],
+            'password' => $data["password"]
+        ];
+
+        if(Auth::attempt($credentials, $data["remember"])){
+            
+            $json['success'] = true;
+            $json['redirect'] = url()->route('index');
 
             /**
              * Redirecting users based on their roles
@@ -54,21 +66,35 @@ class LoginController extends Controller
              * because I'm lazy.
              * 
              */
-            switch(auth()->user()->type){
+            switch(Auth::user()->type){
                 case 'user':
-                    return redirect()->route('myaccount');
+                    //$json["redirect"] = route('myaccount');
                 break;
                 case 'admin':
-                    return redirect()->route('myaccount');
+                    //$json["redirect"] = route('myaccount');
                 break;
                 case 'developer':
-                    return redirect()->route('myaccount');
+                    //$json["redirect"] = route('myaccount');
                 break;
+                
             }
 
         }else{
-            return back()->with('error', 'uname or passwd are wrong.');
+            $json['success'] = false;
+            $json['error'] = '<li>uname or passwd are wrong.</li>';
         }
 
+        return json_encode($json);
+    }
+
+    public function logout(Request $request){
+
+        Auth::logout();
+ 
+        $request->session()->invalidate();
+     
+        $request->session()->regenerateToken();
+
+        return redirect()->route('login');
     }
 }

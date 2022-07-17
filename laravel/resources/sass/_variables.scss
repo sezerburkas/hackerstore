@@ -26,6 +26,9 @@ $regular-text-shadow: 0 0 2px rgb(255,255,255, 0.1), 0px 0px 6px rgb(22, 100, 8,
 $card-shadow:0 0 10px -2px rgba(255, 255, 255, 0.5), 0 0 10px 2px green;
 $card-shadow-hover:0 0 10px 1px rgba(255, 255, 255, 0.5), 0 0 10px 4px green;
 
+$danger-shadow:0 0 10px -2px rgba(255, 255, 255, 0.5), 0 0 10px 2px $red;
+$danger-shadow-hover:0 0 10px 1px rgba(255, 255, 255, 0.5), 0 0 10px 4px $red;
+
 $check-shadow:0 0 3px -2px rgba(255, 255, 255, 0.5), 0 0 3px 1px green;
 $check-shadow-hover:0 0 3px 1px rgba(255, 255, 255, 0.5), 0 0 3px 2px green;
 

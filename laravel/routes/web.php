@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controller\MainController;
+use App\Http\Controllers\MainController;
+use App\Http\Controllers\Auth\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,8 +20,15 @@ Route::get('/', function () {
 })->name('index');
 
 Route::get('/login', function(){
+    if(Auth::check()){
+        return redirect()->route('index');
+    }
     return view('auth.login');
 })->name('login');
+
+Route::POST('/auth', [LoginController::class, 'login'])->name('auth');
+
+Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::get('/register', function(){
     return view('auth.register');
@@ -33,6 +41,4 @@ Route::get('/cart', function(){
 Route::middleware(['auth', 'user-access:user'])->group( function (){
     Route::get('/myAccount', [MainController::class, 'myAccount'])->name('myaccount');
 });
-Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
