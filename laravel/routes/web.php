@@ -16,35 +16,35 @@ use App\Http\Controllers\Auth\RegisterController;
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-})->name('index');
+// Pages only accessible without auth.
 
-Route::get('/login', function(){
-    if(Auth::check()){
-        return redirect()->route('index');
-    }
-    return view('auth.login');
-})->name('login');
+Route::get('/login', [MainController::class, 'login'])->name('login');
 
-Route::get('/register', function(){
-    if(Auth::check()){
-        return redirect()->route('index');
-    }
-    return view('auth.register');
-})->name('register');
+Route::get('/register', [MainController::class, 'register'])->name('register');
 
+// Pages accessible with or without auth
+
+Route::get('/cart', [MainController::class, 'cart'])->name('cart');
+
+Route::get('/', [MainController::class, 'index'])->name('index');
+
+
+// Pages only accessible with auth
+
+Route::middleware(['auth', 'user-access:user'])->group( function (){
+    Route::get('/myAccount', [MainController::class, 'myAccount'])->name('myaccount');
+});
+
+//API group
+
+/** Auth group
+ * This is before I learned restfull API's 
+ */
 Route::POST('/auth', [LoginController::class, 'login'])->name('auth');
 
 Route::POST('/create', [RegisterController::class, 'register'])->name('create');
 
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
-Route::get('/cart', function(){
-    return view('pages.cart');
-})->name('cart');
 
-Route::middleware(['auth', 'user-access:user'])->group( function (){
-    Route::get('/myAccount', [MainController::class, 'myAccount'])->name('myaccount');
-});
 
