@@ -4,11 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
-    use HasApiTokens, HasFactory;
+    use HasFactory, SoftDeletes;
 
      /**
      * The attributes that are mass assignable.
@@ -25,4 +25,14 @@ class Product extends Model
         'img',
     ];
 
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'price' => 'integer',
+        'discount' => 'integer',
+        'stock' => 'integer'
+    ];
 }
