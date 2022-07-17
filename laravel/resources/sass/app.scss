@@ -544,8 +544,8 @@ footer{
     border-radius: $border-radius;
     .form-control{
         border: none;
-        background-color: transparent;
-        color: $green-v1;
+        background-color: transparent !important;
+        color: $green-v1 !important;
         transition:all 0.5s;
         padding-left:0.5em;
         &:focus{
@@ -554,6 +554,12 @@ footer{
             box-shadow:none;
             transition:all 0.5s;
             color: $green-v1;
+        }
+        input:-internal-autofill-selected {
+            appearance: menulist-button;
+            background-image: none !important;
+            background-color: transparent !important;
+            color: $green-v1 !important;
         }
     }
     .input-group-text{
@@ -651,11 +657,12 @@ a{
 }
 .login-form{
     .alert{
+        overflow:hidden;
         margin-top: 2em;
         font-size:1em;
         box-shadow:$danger-shadow;
         color: $red;
-        padding:0em;
+        padding:0em 1em;
         width:100%;
         max-height:0%;
         transition:all 0.3s;

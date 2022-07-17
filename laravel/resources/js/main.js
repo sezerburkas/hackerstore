@@ -28,6 +28,36 @@ $('form[name=login]').on('submit', function(e){
     });
 });
 
+$('form[name=register]').on('submit', function(e){
+    e.preventDefault();
+    $('.alert').css({"padding":"0em 1em","max-height":"0"});
+    $.ajax({
+        type:'POST',
+        url:'/create',
+        data:{
+        _token : $('input[name=_token]').val(),
+        username : $("input[name=username]").val(),
+        email : $("input[name=email]").val(),
+        password : $("input[name=password]").val(), 
+        password_confirmation : $("input[name=password_confirmation]").val(),  
+        terms : $("input[name=terms]:checked").val(),
+        },
+        success:function(data) {
+            if(data.status){
+                window.location.assign(data.redirect);
+            }else{
+                $('.alert').empty();
+                $.each(data.errors, function(key ,error){
+                    $('.alert').append("<li>"+error+"</li>");
+                });
+                $('.alert').show('fade',500);
+                setTimeout(function(){ $('.alert').css({"padding":"1em","max-height":"100%"})},525);
+            }
+        },
+        dataType:"json"
+    });
+});
+
 function typeWrite(username, text12, redirect = false, error){
     text1 = "$> login -u "+username+" -p ********";
     text2 = "The authenticity of host 'hackerstore.pw (18.168.226.206)' can't be established.";

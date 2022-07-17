@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 
 class RegisterController extends Controller
 {
@@ -49,10 +51,11 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
+        return $data->validate([
+            'username' => ['required', 'string', 'max:2', 'unique:users'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'terms' => ['required', 'numeric', 'max:2'],
         ]);
     }
 
@@ -63,11 +66,52 @@ class RegisterController extends Controller
      * @return \App\Models\User
      */
     protected function create(array $data)
-    {
-        return User::create([
-            'name' => $data['name'],
+    {   
+        $user = [
+            'username' => $data['username'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-        ]);
+        ];
+
+        User::create($user);
+
+        
+        if (Auth::attempt(['username'=>$data['username'],'password'=>$data['password']])) {
+            
+            return true;
+        }
     }
+
+    public function register(Request $request){
+
+        $messages = array(
+            'terms.required' => 'Terms & Condition must be checked.',
+        );
+
+        $validator = Validator::make($request->all(),[
+            'username' => ['required', 'string', 'max:15', 'unique:users'],
+            'email' => ['required', 'string', 'email', 'max:50', 'unique:users'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'terms' => ['required', 'numeric'],
+        ], $messages);
+
+        if ($validator->fails()) {
+            $json['errors'] = $validator->errors()->all();
+            $json['status'] = false;
+        }else if($validator->validated()["terms"] != 1){
+            $json['errors'] = 'Terms & Condition must be checked.';
+            $json['status'] = false;
+        }else{
+            if($this->create($validator->validated())){
+                $json['redirect'] = url()->route('index'); 
+                $json['status'] = true;
+            }else{
+                $json['errors'] = 'Something went wrong.';
+                $json['status'] = false;
+            }
+           
+        }
+        return json_encode($json);
+    }
+
 }

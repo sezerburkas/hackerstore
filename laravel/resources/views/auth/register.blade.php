@@ -4,7 +4,8 @@
 
 @section('content')
     <div class="login-form">
-        <form>
+        <form name="register">
+            @csrf
             <div class="row">
                 <div class="col-md-12 d-flex justify-content-center">
                     <a href="/" class="underline-none">
@@ -20,6 +21,8 @@
                     <a class="switch-link right active" href="/register">Register</a>
                 </a>
                 </div>
+            </div>
+            <div class="alert">
             </div>
             <div class="row section">
                 <div class="input-group mb-3">
@@ -42,13 +45,13 @@
             <div class="row my-3">
                 <div class="input-group mb-3">
                     <span class="input-group-text" id="basic-addon1">confirm $></span>
-                    <input type="password" class="form-control" name="password" id="">
+                    <input type="password" class="form-control" name="password_confirmation" id="">
                 </div>
             </div>
             <div class="row mb-2 d-flex justify-content-between">
                 <div class="col">
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
+                        <input class="form-check-input" name="terms" type="checkbox" value="1" id="flexCheckChecked">
                         <label class="form-check-label" for="flexCheckChecked">
                             Tems & Conditions
                         </label>

@@ -21041,8 +21041,8 @@ footer {
 }
 .input-group .form-control {
   border: none;
-  background-color: transparent;
-  color: #0e6b0e;
+  background-color: transparent !important;
+  color: #0e6b0e !important;
   transition: all 0.5s;
   padding-left: 0.5em;
 }
@@ -21052,6 +21052,14 @@ footer {
   box-shadow: none;
   transition: all 0.5s;
   color: #0e6b0e;
+}
+.input-group .form-control input:-internal-autofill-selected {
+  -webkit-appearance: menulist-button;
+     -moz-appearance: menulist-button;
+          appearance: menulist-button;
+  background-image: none !important;
+  background-color: transparent !important;
+  color: #0e6b0e !important;
 }
 .input-group .input-group-text {
   color: #0e6b0e;
@@ -21153,11 +21161,12 @@ a:hover {
 }
 
 .login-form .alert {
+  overflow: hidden;
   margin-top: 2em;
   font-size: 1em;
   box-shadow: 0 0 10px -2px rgba(255, 255, 255, 0.5), 0 0 10px 2px #cc1100;
   color: #cc1100;
-  padding: 0em;
+  padding: 0em 1em;
   width: 100%;
   max-height: 0%;
   transition: all 0.3s;
