@@ -21,6 +21,15 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::resources([
-    'products' => ProductController::class
-]);
+
+Route::middleware(['auth:sanctum', 'verified'])->group(function () {
+
+    Route::resources([
+        'products' => ProductController::class
+    ]);
+
+});
+
+//Override to make public
+Route::get('/products', [ProductController::class, 'index']);
+Route::get('/products/{product}', [ProductController::class, 'show']);
